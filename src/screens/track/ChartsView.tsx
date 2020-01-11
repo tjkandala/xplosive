@@ -5,6 +5,8 @@ import { AppState } from "../../redux/store";
 import { Dispatch } from "redux";
 import { AppAction } from "../../types/actions";
 import { exerciseDictionary } from "../../workoutGenerator/exerciseDictionary";
+import QuantifiableExerciseChart from "./components/QuantifiableExerciseChart";
+import SelectQuantifiableExercise from "./components/SelectQuantifiableExercise";
 
 type Props = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch> &
@@ -15,14 +17,12 @@ type OwnProps = {};
 // TODO: two charts:
 // 1) Weekly Workout frequency histogram (target is 3 or 4)
 // 2) Quantifiable Exercise chart
-const quantifiableExercises = Object.keys(exerciseDictionary.exercises)
-  .map(exercise_id => exerciseDictionary.exercises[exercise_id])
-  .filter(exercise => exercise.quantifiable);
 
 const ChartsView: FC<Props> = () => (
   <View>
+    <QuantifiableExerciseChart />
     <Text>ChartsView</Text>
-    <Text>{quantifiableExercises.length} quantifiableExercises</Text>
+    <SelectQuantifiableExercise />
   </View>
 );
 

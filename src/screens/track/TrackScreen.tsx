@@ -20,8 +20,7 @@ type Props = ReturnType<typeof mapState> &
 type OwnProps = {};
 
 const TrackScreen: FC<Props> & NavigationStackScreenComponent = ({
-  navigation,
-  completedWorkouts
+  navigation
 }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -41,9 +40,7 @@ TrackScreen.navigationOptions = {};
 
 // TODO: Animate state transitions
 
-const mapState = (state: AppState) => ({
-  completedWorkouts: state.workoutHistory.completedWorkouts
-});
+const mapState = (state: AppState) => ({});
 
 const mapDispatch = (dispatch: Dispatch<AppAction>) => ({});
 
@@ -52,6 +49,6 @@ export default connect<
   ReturnType<typeof mapDispatch>,
   OwnProps
 >(
-  mapState,
-  mapDispatch
+  null,
+  null
 )(TrackScreen);

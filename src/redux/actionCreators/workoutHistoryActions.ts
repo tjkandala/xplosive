@@ -1,7 +1,8 @@
 import { AppState } from "../store";
 import {
   AddCompletedWorkoutAction,
-  WorkoutHistoryActionTypes
+  WorkoutHistoryActionTypes,
+  SetSelectedQuantifiableExerciseAction
 } from "../../types/actions";
 import { ICompletedExercise, ICompletedWorkout } from "../../types/workout";
 import { exerciseDictionary } from "../../workoutGenerator/exerciseDictionary";
@@ -40,3 +41,10 @@ export const addCompletedWorkout = (
     completedWorkout: completedWorkout
   };
 };
+
+export const setSelectedQuantifiableExercise = (
+  quantifiableExercise: string
+): SetSelectedQuantifiableExerciseAction => ({
+  type: WorkoutHistoryActionTypes.SET_SELECTED_QUANTIFIABLE_EXERCISE,
+  quantifiableExercise: quantifiableExercise
+});

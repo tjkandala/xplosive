@@ -10,10 +10,10 @@ import {
 
 interface IExerciseDictionary {
   randomExerciseIdByMovementPattern(movement_pattern: MovementPattern): string;
-  exercises: { [exercise_id: string]: IExercise };
+  readonly exercises: { [exercise_id: string]: Readonly<IExercise> };
 }
 
-export const exerciseDictionary: IExerciseDictionary = {
+export const exerciseDictionary: Readonly<IExerciseDictionary> = {
   randomExerciseIdByMovementPattern: function(movement_pattern) {
     const movementPatternList: Array<string> = Object.keys(
       this.exercises
@@ -669,3 +669,7 @@ export const exerciseDictionary: IExerciseDictionary = {
     }
   }
 };
+
+export const quantifiableExercises = Object.keys(
+  exerciseDictionary.exercises
+).filter(exercise => exerciseDictionary.exercises[exercise].quantifiable);

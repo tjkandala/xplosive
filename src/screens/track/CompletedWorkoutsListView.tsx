@@ -5,6 +5,7 @@ import { AppState } from "../../redux/store";
 import { Dispatch } from "redux";
 import { AppAction } from "../../types/actions";
 import { ICompletedWorkout, WorkoutIntensity } from "../../types/workout";
+import { getCompletedWorkouts } from "../../redux/selectors/workoutHistory";
 
 type Props = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch> &
@@ -28,7 +29,7 @@ const CompletedWorkoutsListView: FC<Props> = ({ completedWorkouts }) => (
 );
 
 const mapState = (state: AppState) => ({
-  completedWorkouts: state.workoutHistory.completedWorkouts
+  completedWorkouts: getCompletedWorkouts(state)
 });
 
 const mapDispatch = (dispatch: Dispatch<AppAction>) => ({});

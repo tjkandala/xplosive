@@ -60,7 +60,8 @@ export type CurrentWorkoutAction =
   | UpdateSelectedExerciseQuantityAction;
 
 export enum WorkoutHistoryActionTypes {
-  ADD_COMPLETED_WORKOUT = "ADD_COMPLETED_WORKOUT"
+  ADD_COMPLETED_WORKOUT = "ADD_COMPLETED_WORKOUT",
+  SET_SELECTED_QUANTIFIABLE_EXERCISE = "SET_SELECTED_QUANTIFIABLE_EXERCISE"
 }
 
 export interface AddCompletedWorkoutAction {
@@ -68,7 +69,14 @@ export interface AddCompletedWorkoutAction {
   completedWorkout: ICompletedWorkout;
 }
 
-export type WorkoutHistoryAction = AddCompletedWorkoutAction;
+export interface SetSelectedQuantifiableExerciseAction {
+  type: typeof WorkoutHistoryActionTypes.SET_SELECTED_QUANTIFIABLE_EXERCISE;
+  quantifiableExercise: string;
+}
+
+export type WorkoutHistoryAction =
+  | AddCompletedWorkoutAction
+  | SetSelectedQuantifiableExerciseAction;
 
 export enum UserPreferencesActionTypes {}
 
