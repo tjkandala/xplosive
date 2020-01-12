@@ -25,14 +25,7 @@ type OwnProps = {};
 const WorkoutScreen: FC<Props> & NavigationStackScreenComponent = ({
   workingOut,
   navigation
-}) => {
-  switch (workingOut) {
-    case true:
-      return <WorkingOutView />;
-    case false:
-      return <NotWorkingOutView />;
-  }
-};
+}) => (workingOut ? <WorkingOutView /> : <NotWorkingOutView />);
 
 WorkoutScreen.navigationOptions = {};
 

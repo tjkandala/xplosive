@@ -33,6 +33,227 @@ const workoutHistoryDefaultState: IWorkoutHistoryState = {
       ]
     },
     {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+
+    {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("December 22, 2019"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Short-Approach Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 44, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
+      completed_at: new Date("January 1, 2020"),
+      workout_intensity: WorkoutIntensity.Productive,
+      completed_exercises: [
+        {
+          exercise_id: "Vertical Jump",
+          order: 0,
+          completed_sets: [{ quantity: 39, reps: 3, notes: "" }]
+        }
+      ]
+    },
+    {
       completed_at: new Date("January 3, 2020"),
       workout_intensity: WorkoutIntensity.Productive,
       completed_exercises: [
@@ -48,9 +269,14 @@ const workoutHistoryDefaultState: IWorkoutHistoryState = {
       workout_intensity: WorkoutIntensity.Productive,
       completed_exercises: [
         {
+          exercise_id: "Speed Skaters",
+          order: 0,
+          completed_sets: [{ quantity: null, reps: 3, notes: "" }]
+        },
+        {
           exercise_id: "Vertical Jump",
           order: 0,
-          completed_sets: [{ quantity: 40, reps: 3, notes: "" }]
+          completed_sets: [{ quantity: 42.5, reps: 3, notes: "" }]
         }
       ]
     }

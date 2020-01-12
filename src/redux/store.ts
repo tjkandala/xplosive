@@ -34,9 +34,9 @@ const persistConfig = {
   // Storage Method (React Native)
   storage: AsyncStorage,
   // Whitelist (Save Specific Reducers)
-  whitelist: [],
+  whitelist: [""],
   // Blacklist (Don't Save Specific Reducers)
-  blacklist: []
+  blacklist: [""]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -1,12 +1,55 @@
 import {
   WorkoutIntensity,
   ICompletedWorkouts,
-  MovementPattern
+  MovementPattern,
+  ICompletedExercise
 } from "../types/workout";
 import { exerciseDictionary } from "./exerciseDictionary";
+import { from } from "rxjs";
+import {
+  toArray,
+  map,
+  take,
+  filter,
+  flatMap,
+  scan,
+  takeLast,
+  tap
+} from "rxjs/operators";
+
+const isBilateralJump = (exercise: ICompletedExercise) =>
+  exerciseDictionary.exercises[exercise.exercise_id].movement_pattern ===
+  MovementPattern.BilateralJump;
+
+const isQuantifiableExercise = (exercise: ICompletedExercise) =>
+  exerciseDictionary.exercises[exercise.exercise_id].quantifiable === true;
+
+const bilateralJumpTransducer = (workouts: ICompletedWorkouts) => {
+  let val: ICompletedExercise[];
+  // the synchronous observable emits each element of the workout array TODO:
+  // this enables me to write in a "functional" style, but without the performance
+  // costs of chaining lots of array prototype methods
+  from(workouts)
+    .pipe(
+      takeLast(16),
+      flatMap(workout => workout.completed_exercises),
+      tap(console.log),
+      filter(isBilateralJump),
+      filter(isQuantifiableExercise),
+      toArray()
+    )
+    .subscribe(v => {
+      val = v;
+    });
+
+  return val;
+};
+// why am I using rxjs instead of ramda for transducers? rxjs works much better with typescript,
+// and I love rxjs operators. rxjs is very readable (at least to me).
 
 export const calculateIntensity = (
-  completedWorkouts: ICompletedWorkouts
+  completedWorkouts: ICompletedWorkouts,
+  now: Date = new Date()
 ): WorkoutIntensity => {
   const nonRecoveryWorkouts: ICompletedWorkouts = completedWorkouts.filter(
     completedWorkout =>
@@ -14,7 +57,7 @@ export const calculateIntensity = (
   );
 
   const daysSinceLastWorkout = nonRecoveryWorkouts.length
-    ? calculateDaysSinceLastWorkout(nonRecoveryWorkouts)
+    ? calculateDaysSinceLastWorkout(nonRecoveryWorkouts, now)
     : 0;
 
   switch (nonRecoveryWorkouts.length) {
@@ -35,15 +78,10 @@ export const calculateIntensity = (
         // all quantifiable bilateral jump exercises in chronological order.
         // I'm using bilateral jumps to track progress because
         // they best demonstrate pure explosiveness (unilateral jumps involve more skill)
-        const bilateralJumpHistory = nonRecoveryWorkouts.flatMap(workout =>
-          workout.completed_exercises.filter(
-            exercise =>
-              exerciseDictionary.exercises[exercise.exercise_id]
-                .movement_pattern === MovementPattern.BilateralJump &&
-              exerciseDictionary.exercises[exercise.exercise_id]
-                .quantifiable === true
-          )
+        const bilateralJumpHistory = bilateralJumpTransducer(
+          nonRecoveryWorkouts
         );
+        console.log(bilateralJumpHistory);
 
         // make a Set of all bilateral jump exercises in the athletes history
         // so I can make an array of the athlete's performance history for
@@ -114,9 +152,9 @@ export const calculateIntensity = (
 // calculate the number of days between the last (non-recovery) workout and now
 // TODO: use in the UI as well
 const calculateDaysSinceLastWorkout = (
-  nonRecoveryWorkouts: ICompletedWorkouts
+  nonRecoveryWorkouts: ICompletedWorkouts,
+  now: Date
 ): number => {
-  const now = new Date();
   const lastNonRecoveryWorkoutDate = new Date(
     nonRecoveryWorkouts[nonRecoveryWorkouts.length - 1].completed_at
   );
