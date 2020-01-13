@@ -8,18 +8,19 @@ import {
 import { exerciseDictionary } from "./exerciseDictionary";
 import { from, Observable } from "rxjs";
 import { toArray, filter, flatMap, takeLast } from "rxjs/operators";
+import { executeObsducer } from "obsducer";
 
 /** Returns the last value of a synchronous/cold observable. Use the toArray operator  */
-export const executeTransducer = <T>(
-  syncObservable: Observable<T>
-): Array<T> => {
-  let value: Array<T>;
-  syncObservable
-    .pipe(toArray())
-    .subscribe(v => (value = v))
-    .unsubscribe();
-  return value;
-};
+// export const executeTransducer = <T>(
+//   syncObservable: Observable<T>
+// ): Array<T> => {
+//   let value: Array<T>;
+//   syncObservable
+//     .pipe(toArray())
+//     .subscribe(v => (value = v))
+//     .unsubscribe();
+//   return value;
+// };
 // this enables me to write in a "functional" style, but without the performance
 // costs of chaining lots of array prototype methods
 // why am I using rxjs instead of ramda for transducers? rxjs works much better with typescript,
@@ -56,7 +57,7 @@ export const calculateIntensity = (
         // all quantifiable bilateral jump exercises in chronological order.
         // I'm using bilateral jumps to track progress because
         // they best demonstrate pure explosiveness (unilateral jumps involve more skill)
-        const bilateralJumpHistory = executeTransducer(
+        const bilateralJumpHistory = executeObsducer(
           from(nonRecoveryWorkouts).pipe(
             takeLast(16),
             flatMap(getCompletedExercises),

@@ -1,8 +1,9 @@
 import { AppState } from "../store";
 import { createSelector } from "reselect";
-import { executeTransducer } from "../../workoutGenerator/calculateIntensity";
+
 import { from } from "rxjs";
 import { flatMap, filter, toArray } from "rxjs/operators";
+import { executeObsducer } from "obsducer/build";
 
 export const getSelectedQuantifiableExercise = (state: AppState) =>
   state.workoutHistory.selectedQuantifiableExercise;
@@ -13,7 +14,7 @@ export const getCompletedWorkouts = (state: AppState) =>
 export const getSelectedQuantifiableExerciseHistory = createSelector(
   [getSelectedQuantifiableExercise, getCompletedWorkouts],
   (selectedQuantifiableExercise, completedWorkouts) =>
-    executeTransducer(
+    executeObsducer(
       from(completedWorkouts).pipe(
         flatMap(workout => workout.completed_exercises),
         filter(
