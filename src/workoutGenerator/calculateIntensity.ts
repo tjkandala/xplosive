@@ -7,7 +7,7 @@ import {
 } from "../types/workout";
 import { exerciseDictionary } from "./exerciseDictionary";
 import { from, Observable } from "rxjs";
-import { toArray, filter, flatMap, takeLast } from "rxjs/operators";
+import { toArray, filter, flatMap, takeLast, distinct } from "rxjs/operators";
 import { executeObsducer } from "obsducer";
 
 /** Returns the last value of a synchronous/cold observable. Use the toArray operator  */
@@ -82,6 +82,11 @@ export const calculateIntensity = (
             )
           )
           .reverse();
+
+        const bilathistorbyex = executeObsducer(
+          from(bilateralJumpHistory).pipe(distinct(v => v.exercise_id))
+        );
+        console.log(bilathistorbyex);
 
         // get any bilateral jump exercise that has been recorded more than once
         // (for consistency. don't want to compare e.g. max running vert vs standing vert)
