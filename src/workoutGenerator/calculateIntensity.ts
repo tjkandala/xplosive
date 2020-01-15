@@ -6,9 +6,23 @@ import {
   ICompletedWorkout
 } from "../types/workout";
 import { exerciseDictionary } from "./exerciseDictionary";
-import { from, Observable } from "rxjs";
-import { toArray, filter, flatMap, takeLast, distinct } from "rxjs/operators";
-import { executeObsducer } from "obsducer";
+import { from, Observable, pipe, UnaryFunction } from "rxjs";
+import {
+  toArray,
+  filter,
+  flatMap,
+  takeLast,
+  distinct,
+  pluck,
+  map,
+  find,
+  groupBy,
+  mergeMap,
+  max,
+  tap,
+  take
+} from "rxjs/operators";
+import createObsducer, { executeObsducer } from "obsducer";
 
 /** Returns the last value of a synchronous/cold observable. Use the toArray operator  */
 // export const executeTransducer = <T>(
@@ -57,57 +71,63 @@ export const calculateIntensity = (
         // all quantifiable bilateral jump exercises in chronological order.
         // I'm using bilateral jumps to track progress because
         // they best demonstrate pure explosiveness (unilateral jumps involve more skill)
-        const bilateralJumpHistory = executeObsducer(
-          from(nonRecoveryWorkouts).pipe(
-            takeLast(16),
-            flatMap(getCompletedExercises),
-            filter(isBilateralJump),
-            filter(isQuantifiableExercise)
+
+        const workoutsToBilatJumps = pipe(
+          take<ICompletedWorkout>(16),
+          flatMap(getCompletedExercises),
+          filter(isBilateralJump),
+          filter(isQuantifiableExercise)
+        );
+
+        const obsduceWorkoutsToBilatJumps = createObsducer(
+          workoutsToBilatJumps
+        );
+
+        const bilateralJumpHistory = obsduceWorkoutsToBilatJumps(
+          nonRecoveryWorkouts.reverse()
+        );
+
+        const trendFromBilatJumpHistory = pipe(
+          distinct((v: ICompletedExercise) => v.exercise_id),
+          pluck("exercise_id"),
+          map(exercise_id =>
+            bilateralJumpHistory.filter(
+              exercise => exercise.exercise_id === exercise_id
+            )
+          ),
+          find(history => history.length > 1),
+          flatMap(v => v),
+          flatMap(v =>
+            from(v.completed_sets).pipe(
+              map(y => y.quantity),
+              max()
+            )
           )
         );
+
+        const bilatTrendFromWorkouts = createObsducer(
+          pipe(trendFromBilatJumpHistory)
+        );
+
+        const bilathistorbyex = bilatTrendFromWorkouts(bilateralJumpHistory);
+
+        console.log(bilathistorbyex);
 
         // make a Set of all bilateral jump exercises in the athletes history
         // so I can make an array of the athlete's performance history for
         // each bilateral jump exercise the athlete has ever performed.
         // Reverse so I can evaluate the most recent valid bilateral jump trend (valid means 2+ bouts)
-        const bilateralJumpHistoryExercises = new Set(
-          bilateralJumpHistory.map(exercise => exercise.exercise_id)
-        );
-        const bilateralJumpHistoryByExercise = Array.from(
-          bilateralJumpHistoryExercises
-        )
-          .map(exercise_id =>
-            bilateralJumpHistory.filter(
-              exercise => exercise.exercise_id === exercise_id
-            )
-          )
-          .reverse();
-
-        const bilathistorbyex = executeObsducer(
-          from(bilateralJumpHistory).pipe(distinct(v => v.exercise_id))
-        );
-        console.log(bilathistorbyex);
 
         // get any bilateral jump exercise that has been recorded more than once
         // (for consistency. don't want to compare e.g. max running vert vs standing vert)
         // and reduce each array of completed sets into the highest recorded vertical jump that day
         // so that I can assess whether the athlete is trending up or down.
-        const validBilateralJumpTrend = bilateralJumpHistoryByExercise
-          .find(history => history.length > 1)
-          .map(exercise =>
-            exercise.completed_sets.reduce(
-              (acc, v) => (v.quantity > acc ? v.quantity : acc),
-              0
-            )
-          );
 
-        if (validBilateralJumpTrend) {
+        if (bilathistorbyex) {
           // if their vertical jump has been improving, continue to assign
           // "productive" workouts. if it ain't broke, don't fix it.
           // if they haven't been improving, give them a "wallbreaker"
-          return validBilateralJumpTrend[validBilateralJumpTrend.length - 1] -
-            validBilateralJumpTrend[validBilateralJumpTrend.length - 2] >=
-            0
+          return bilathistorbyex[0] - bilathistorbyex[1] >= 0
             ? WorkoutIntensity.Productive
             : WorkoutIntensity.WallBreaker;
         } else {

@@ -23,3 +23,11 @@ export const getSelectedQuantifiableExerciseHistory = createSelector(
       )
     )
 );
+
+// export const getSelectedQuantifiableExerciseHistory = createSelector(
+//   [getSelectedQuantifiableExercise, getCompletedWorkouts],
+//   (selectedQuantifiableExercise, completedWorkouts) =>
+//     completedWorkouts
+//       .flatMap(workout => workout.completed_exercises)
+//       .filter(exercise => exercise.exercise_id === selectedQuantifiableExercise)
+// );
